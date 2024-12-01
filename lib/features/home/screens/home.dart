@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rivezni/core/providers/subject_provider.dart';
+import 'package:rivezni/features/home/widgets/show_add_subject_dialog.dart';
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  _Home createState() => _Home();
+}
+
+class _Home extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<SubjectProvider>(context, listen: false).getSubjects();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<SubjectProvider>(
+      builder: (context, subjectProvider, _) {
+        return Scaffold(
+          body: Center(
+            child: subjectProvider.subjects.isEmpty
+                ? const CircularProgressIndicator()
+                : GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 8.0,
+                      crossAxisSpacing: 8.0,
+                    ),
+                    padding: const EdgeInsets.all(10.0),
+                    itemCount: subjectProvider.subjects.length,
+                    itemBuilder: (context, index) {
+                      final subject = subjectProvider.subjects[index];
+                      final subjectColor = Color(int.parse(subject.color.replaceFirst('#', '0xFF')));
+
+                      return GestureDetector(
+                        onTap: () => print("You clicked on ${subject.name}"),
+                        child: Container(
+                          color: subjectColor,
+                          child: Center(
+                            child: Text(
+                              subject.name,
+                              style: TextStyle(fontSize: 18.0, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => showAddSubjectDialog(context: context),
+          ),
+        );
+      },
+    );
+  }
+}

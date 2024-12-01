@@ -1,21 +1,22 @@
-import 'package:flutter/material.dart';
-
 class Subject {
-  final String id;
+  final int? id;
   final String name;
-  final Color color;
+  final String color;
+  final String userId;
 
   const Subject({
-    required this.id,
+    this.id,
     required this.name,
-    this.color = Colors.orange,
+    this.color = "#FF2196F3",
+    required this.userId,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      if (id != null) 'id': id,
       'name': name,
-      'color': color
+      'color': color,
+      'userId': userId,
     };
   }
 
@@ -23,7 +24,8 @@ class Subject {
     return Subject(
       id: map["id"],
       name: map['name'] ?? '',
-      color: map['color'] ?? Colors.blue
+      color: map['color'],
+      userId: map['userId'],
     );
   }
 }

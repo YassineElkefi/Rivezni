@@ -25,15 +25,18 @@ app.get("/", (req,res) => {
 });
 
 //Subjects CRUD
-app.get("/subjects", async (req,res) => {
+app.get("/subjects", async (req, res) => {
     try {
         const [rows] = await pool.query("SELECT * FROM subject");
         res.json(rows);
-    }catch(err){
+    } catch (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
     }
 });
+
+
+
 
 app.get("/subject/:id", async (req,res) => {
     try {
@@ -47,11 +50,12 @@ app.get("/subject/:id", async (req,res) => {
 
 app.post("/subject", async (req,res) => {
     try {
-        const [result] = await pool.query("INSERT INTO subject (name, userId) VALUES (?, ?)", [req.body.name, req.body.userId]);
+        const [result] = await pool.query("INSERT INTO subject (name, color, userId) VALUES (?, ?, ?)", [req.body.name, req.body.color, req.body.userId]);
         
         const newSubject = {
             id: result.insertId,
             name: req.body.name,
+            color: req.body.color,
             userId: req.body.userId
         };
         res.status(201).json(newSubject);
