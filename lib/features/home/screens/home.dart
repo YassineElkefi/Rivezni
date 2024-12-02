@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rivezni/core/providers/subject_provider.dart';
 import 'package:rivezni/features/home/widgets/show_add_subject_dialog.dart';
+import 'package:rivezni/features/home/widgets/show_delete_subject_Dialog.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,7 +25,7 @@ class _Home extends State<Home> {
         return Scaffold(
           body: Center(
             child: subjectProvider.subjects.isEmpty
-                ? const CircularProgressIndicator()
+                ? const Text("Create a folder of a subject!")
                 : GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -38,6 +39,7 @@ class _Home extends State<Home> {
                       final subjectColor = Color(int.parse(subject.color.replaceFirst('#', '0xFF')));
 
                       return GestureDetector(
+                        onLongPress: () => showDeleteSubjectDialog(context: context, id: subject.id),
                         onTap: () => print("You clicked on ${subject.name}"),
                         child: Container(
                           color: subjectColor,

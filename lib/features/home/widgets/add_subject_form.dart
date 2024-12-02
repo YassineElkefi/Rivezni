@@ -103,7 +103,7 @@ class _AddSubjectFormState extends State<AddSubjectForm> {
                     Subject subject = Subject(name: subjectName, color: subjectColor, userId: userId);
 
                     subjectProvider.addSubject(subject);
-
+                    Navigator.of(context).pop();
                     _subjectNameController.clear();
                     setState(() {
                       _selectedColor = Colors.blue;
@@ -112,10 +112,10 @@ class _AddSubjectFormState extends State<AddSubjectForm> {
                     showToast(message: "Subject Added!");
                   }
                 },
-                child: const Text("Submit"),
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 50),
                 ),
+                child: const Text("Submit"),
               ),
 
 
