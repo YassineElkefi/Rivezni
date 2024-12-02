@@ -8,8 +8,8 @@ class SubjectService {
 
   SubjectService();
 
-  Future<List<Subject>> fetchSubjects() async {
-    const String path = '${baseUrl}subjects';
+  Future<List<Subject>> fetchSubjects(String userId) async {
+    String path = '${baseUrl}subjects/$userId';
 
     final response = await httpClient.get(Uri.parse(path));
 
