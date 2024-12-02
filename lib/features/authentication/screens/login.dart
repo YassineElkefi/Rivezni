@@ -5,6 +5,7 @@ import 'package:rivezni/core/providers/auth_provider.dart';
 import 'package:rivezni/features/authentication/screens/register.dart';
 import 'package:rivezni/features/authentication/widgets/login_form.dart';
 import 'package:rivezni/features/home/screens/home.dart';
+import 'package:rivezni/features/navigation_bar.dart';
 import 'package:rivezni/shared/widgets/toast.dart';
 
 class Login extends StatefulWidget {
@@ -44,10 +45,10 @@ class _LoginState extends State<Login> {
 
     if (user != null) {
       showToast(message: "User is successfully logged in");
-              Navigator.push(
+              Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Home(),
+                              builder: (context) => const Navigation_Bar(),
                             ),
                           );
     } else {

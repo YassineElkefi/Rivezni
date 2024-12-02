@@ -4,7 +4,7 @@ import 'package:rivezni/core/providers/auth_provider.dart';
 import 'package:rivezni/features/authentication/screens/login.dart';
 import 'package:rivezni/features/discover/screens/discover.dart';
 import 'package:rivezni/features/home/screens/home.dart';
-import 'package:rivezni/features/profile/screens/profile.dart';
+import 'package:rivezni/features/settings/screens/settings.dart';
 
 class Navigation_Bar extends StatefulWidget {
   const Navigation_Bar({super.key});
@@ -17,7 +17,7 @@ class _NavigationBarState extends State<Navigation_Bar> {
   int _selectedIndex = 1;
 
   final List<Widget> _widgetOptions = <Widget>[
-    const Profile(),
+    const Settings(),
     const Home(),
     const Discover(),
   ];
@@ -69,7 +69,7 @@ class _NavigationBarState extends State<Navigation_Bar> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _buildNavItem(Icons.person, 0),
+                      _buildNavItem(Icons.settings, 0),
                       _buildNavItem(Icons.folder_copy_rounded, 1),
                       _buildNavItem(Icons.location_searching_rounded, 2),
                     ],
