@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rivezni/core/providers/auth_provider.dart';
+import 'package:rivezni/core/providers/flashcard_provider.dart';
 import 'package:rivezni/core/providers/subject_provider.dart';
 import 'package:rivezni/core/providers/theme_notifier.dart';
 import 'package:rivezni/features/authentication/screens/login.dart';
@@ -16,6 +17,7 @@ void main() async{
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => SubjectProvider()),
+        ChangeNotifierProvider(create: (_) => FlashcardProvider()),
       ],
       child: const MyApp(),
     ),);

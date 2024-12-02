@@ -94,9 +94,9 @@ app.delete("/subject/:id", async (req,res) => {
 
 //Flashcards CRUD
 
-app.get("/flashcards", async (req,res) => {
+app.get("/flashcards/:subjectId", async (req,res) => {
     try {
-        const [rows] = await pool.query("SELECT * FROM flashcard");
+        const [rows] = await pool.query("SELECT * FROM flashcard where subjectId = ?", [req.params.subjectId]);
         res.json(rows);
     }catch(err){
         console.error(err);
