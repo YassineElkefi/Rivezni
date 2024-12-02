@@ -36,6 +36,8 @@ class FirebaseAuthService {
         email: email, 
         password: password,
       );
+      await credential.user?.updateDisplayName(username);
+      await credential.user?.reload();
 
       return credential.user;
 

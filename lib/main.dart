@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:rivezni/core/providers/auth_provider.dart';
 import 'package:rivezni/core/providers/flashcard_provider.dart';
 import 'package:rivezni/core/providers/subject_provider.dart';
+import 'package:rivezni/core/providers/theme_notifier.dart';
 import 'package:rivezni/features/authentication/screens/login.dart';
 import 'package:rivezni/features/navigation_bar.dart';
 
@@ -13,6 +14,7 @@ void main() async{
   await Firebase.initializeApp();
   runApp(MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => SubjectProvider()),
         ChangeNotifierProvider(create: (_) => FlashcardProvider()),
@@ -26,9 +28,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
-      
-      theme: ThemeData(scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255)),
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: themeNotifier.themeMode,
       home: Consumer<AuthProvider>(
         builder: (context, authProvider, _) {
           return authProvider.isLoggedIn ? const Navigation_Bar() : const Login();
