@@ -25,9 +25,9 @@ app.get("/", (req,res) => {
 });
 
 //Subjects CRUD
-app.get("/subjects", async (req,res) => {
+app.get("/subjects/:userId", async (req,res) => {
     try {
-        const [rows] = await pool.query("SELECT * FROM subject");
+        const [rows] = await pool.query("SELECT * FROM subject where userId = ?", [req.params.userId]);
         res.json(rows);
     }catch(err){
         console.error(err);
