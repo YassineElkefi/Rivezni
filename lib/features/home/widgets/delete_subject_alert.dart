@@ -9,10 +9,9 @@ class DeleteSubjectAlert extends StatelessWidget {
   const DeleteSubjectAlert(this.id, {Key? key}) : super(key: key);
 
   Widget _button(
-      BuildContext context, SubjectProvider subjectProvider, String text) {
+      BuildContext context, SubjectProvider subjectProvider) {
     return ElevatedButton(
       onPressed: () {
-        if (text == "Confirm") {
           subjectProvider.deleteSubject(id).then((_) {
             Navigator.of(context).pop();
             showToast(message: "Subject Deleted!");
@@ -20,14 +19,20 @@ class DeleteSubjectAlert extends StatelessWidget {
             Navigator.of(context).pop();
             showToast(message: "Error: $error");
           });
-        } else {
-          Navigator.of(context).pop();
-        }
+
       },
+
       style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  
         minimumSize: const Size(100, 50),
       ),
-      child: Text(text),
+      child: const Text("Confirm"),
     );
   }
 
@@ -49,8 +54,7 @@ class DeleteSubjectAlert extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _button(context, subjectProvider, "Confirm"),
-                  _button(context, subjectProvider, "Cancel"),
+                  _button(context, subjectProvider),
                 ],
               ),
             ],

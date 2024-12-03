@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:rivezni/core/providers/auth_provider.dart';
 import 'package:rivezni/features/authentication/screens/register.dart';
 import 'package:rivezni/features/authentication/widgets/login_form.dart';
-import 'package:rivezni/features/home/screens/home.dart';
 import 'package:rivezni/features/navigation_bar.dart';
 import 'package:rivezni/shared/widgets/toast.dart';
 

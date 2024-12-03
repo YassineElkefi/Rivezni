@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rivezni/core/providers/flashcard_provider.dart';
-import 'package:rivezni/data/models/flashcard.dart';
 import 'package:rivezni/data/models/subject.dart';
-import 'package:rivezni/features/flashcards_management/screens/flashcard_detail.dart';
+import 'package:rivezni/features/flashcards_management/widgets/flashcard_card.dart';
 import 'package:rivezni/features/flashcards_management/widgets/show_add_flashcard_dialog.dart';
+import 'package:rivezni/features/flashcards_management/widgets/show_flashcard_detail.dart';
 
 class FlashcardsHome extends StatefulWidget {
   final Subject subject;
+
 
   const FlashcardsHome({Key? key, required this.subject}) : super(key: key);
 
@@ -26,64 +27,20 @@ class _FlashcardsHomeState extends State<FlashcardsHome> {
     });
   }
 
-  Widget _card(Flashcard flashcard) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 3.0,
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset(
-                'assets/images/flashcard.png',
-                width: 60,
-                height: 60,
-              ),
-              const SizedBox(width: 16.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      flashcard.question,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 8.0),
-                    Text(
-                      flashcard.answer,
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          )),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Consumer<FlashcardProvider>(
         builder: (context, flashcardProvider, _) {
+          final subjectColor = Color(int.parse(widget.subject.color.replaceFirst('#', '0xFF')));
+
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
+          backgroundColor: subjectColor,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
             onPressed: () => {
               Navigator.pop(context),
               flashcardProvider.flashcards = []
@@ -110,9 +67,9 @@ class _FlashcardsHomeState extends State<FlashcardsHome> {
                         itemBuilder: (context, index) {
                           final flashcard = flashcardProvider.flashcards[index];
                           return GestureDetector(
-                            child: _card(flashcard),
+                            child: card(flashcard: flashcard),
                             onTap: () =>
-                                _showFlashcardDetails(flashcard, index),
+                                showFlashcardDetails(context: context, flashcard: flashcard, initialIndex: index),
                           );
                         },
                       ),
@@ -122,40 +79,12 @@ class _FlashcardsHomeState extends State<FlashcardsHome> {
         floatingActionButton: FloatingActionButton(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          backgroundColor: const Color.fromRGBO(82, 170, 94, 1.0),
+          backgroundColor: subjectColor,
           onPressed: () => showAddFlashcardDialog(
-              context: context, subjectId: widget.subject.id!),
+              context: context, subject: widget.subject),
           child: const Icon(Icons.add, color: Colors.white, size: 35),
         ),
       );
     });
-  }
-
-  void _showFlashcardDetails(Flashcard flashcard, int initialIndex) {
-    final flashcardProvider =
-        Provider.of<FlashcardProvider>(context, listen: false);
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.7,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: FlashcardDetailPage(
-                flashcards: List<Flashcard>.from(flashcardProvider.flashcards),
-                initialIndex: initialIndex,
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 }

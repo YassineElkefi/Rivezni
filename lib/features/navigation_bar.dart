@@ -53,9 +53,12 @@ class _NavigationBarState extends State<Navigation_Bar> {
         }
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Flutter App'),
-          ),
+        appBar: AppBar(
+          //backgroundColor: const Color.fromRGBO(243,237,247, 1),
+          title: const Text("Rivezni",
+              style: const TextStyle(color: Color.fromARGB(255, 83, 83, 83))),
+          centerTitle: true,
+        ),
           body: Center(
             child: _widgetOptions.elementAt(_selectedIndex),
           ),

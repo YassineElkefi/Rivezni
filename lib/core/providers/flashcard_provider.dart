@@ -19,7 +19,6 @@ class FlashcardProvider with ChangeNotifier {
       flashcards = await flashcardService.fetchFlashcards(subject.id!);
       loading = false;
       notifyListeners();
-
     } catch (e) {
       throw Exception("Fetch failed: $e");
     }
@@ -38,12 +37,10 @@ class FlashcardProvider with ChangeNotifier {
 
   Future<void> deleteFlashcard(int id) async {
     try {
+      print("---------------from provider----$id");
       final response = await flashcardService.deleteFlashcard(id);
-      if (response.statusCode == 200 || response.statusCode == 204) {
-        await getFlashcards(subject);
-      } else {
-        throw Exception("Failed to delete flashcard: ${response.body}");
-      }
+      print("--------------------------${response.statusCode}");
+      await getFlashcards(subject);
     } catch (e) {
       debugPrint("Error deleting flashcard: $e");
       rethrow;
