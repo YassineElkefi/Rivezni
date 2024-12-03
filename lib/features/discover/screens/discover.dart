@@ -95,8 +95,8 @@ class _Discover extends State<Discover> {
                 ElevatedButton.icon(
                   onPressed: fetchCourses,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: theme.colorScheme.primary,
-                    foregroundColor: theme.colorScheme.onPrimary,
+                    backgroundColor: Color.fromRGBO(82, 170, 94, 1.0),
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),

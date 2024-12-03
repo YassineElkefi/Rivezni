@@ -54,7 +54,7 @@ class _NavigationBarState extends State<Navigation_Bar> {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Flutter App'),
+            title: const Text('Rivezni'),
           ),
           body: Center(
             child: _widgetOptions.elementAt(_selectedIndex),
