@@ -80,7 +80,7 @@ class Settings extends StatelessWidget {
                             themeNotifier.themeMode == ThemeMode.dark 
                               ? Icons.dark_mode_outlined 
                               : Icons.light_mode_outlined,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Color.fromRGBO(82, 170, 94, 1.0)
                           ),
                           const SizedBox(width: 12),
                           Text(
@@ -94,7 +94,7 @@ class Settings extends StatelessWidget {
                         onChanged: (value) {
                           themeNotifier.toggleTheme(value);
                         },
-                        activeColor: Theme.of(context).colorScheme.primary,
+                        activeColor: Color.fromRGBO(82, 170, 94, 1.0),
                       ),
                     ],
                   ),
@@ -147,7 +147,7 @@ class Settings extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: Theme.of(context).colorScheme.primary,
+          color: Color.fromRGBO(82, 170, 94, 1.0),
         ),
         const SizedBox(width: 12),
         Column(

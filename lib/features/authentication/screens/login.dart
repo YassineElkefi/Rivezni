@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
       body: SafeArea(
         child: Column(
           children: [
-            _buildBackButton(),
+            //_buildBackButton(),
             const SizedBox(height: 5),
             Lottie.network(
               'https://lottie.host/dee65a23-907f-4fdc-821b-702d69dbd451/pVbPqEZbdj.json',
