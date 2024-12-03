@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 6), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Lottie.network(
-          'https://lottie.host/ab8692ab-6ea3-44f9-9805-a37d96ab09a1/GAtTk9VcKH.json',
+          'https://lottie.host/3b3c5309-b5e1-448f-84ec-3dc62032490c/AAWTBrXAic.json',
           height: 300.0,
         ),
       ),

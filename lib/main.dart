@@ -6,8 +6,8 @@ import 'package:rivezni/core/providers/auth_provider.dart';
 import 'package:rivezni/core/providers/flashcard_provider.dart';
 import 'package:rivezni/core/providers/subject_provider.dart';
 import 'package:rivezni/core/providers/theme_notifier.dart';
-import 'package:rivezni/features/authentication/screens/login.dart';
 import 'package:rivezni/features/navigation_bar.dart';
+import 'package:rivezni/features/splash_screen/screens/splash_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeNotifier.themeMode,
       home: Consumer<AuthProvider>(
         builder: (context, authProvider, _) {
-          return authProvider.isLoggedIn ? const Navigation_Bar() : const Login();
+          return authProvider.isLoggedIn ? const Navigation_Bar() : const SplashScreen();
         },
       )
     );
