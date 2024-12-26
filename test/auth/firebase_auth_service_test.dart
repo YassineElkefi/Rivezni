@@ -35,7 +35,7 @@ void main() {
       () => underTest.signUpWithEmailAndPassword(
           mockEmail, mockPassword, mockUsername),
       throwsA(isA<FirebaseAuthException>()
-          .having((e) => e.code, 'code', 'invalid-email')),
+          .having((e) => e.code, 'code', 'weak-password')),
     );
   });
 
