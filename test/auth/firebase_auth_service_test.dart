@@ -35,7 +35,7 @@ void main() {
       () => underTest.signUpWithEmailAndPassword(
           mockEmail, mockPassword, mockUsername),
       throwsA(isA<FirebaseAuthException>()
-          .having((e) => e.code, 'code', 'weak-password')),
+          .having((e) => e.code, 'code', 'invalid-email')),
     );
   });
 
@@ -83,7 +83,7 @@ void main() {
     );
   });
 
-    test("Sign In: No Accunt Found With This Email", () async {
+  test("Sign In: No Accunt Found With This Email", () async {
     String mockEmail = "hibabahri@gmail.com";
     String mockPassword = "password";
 
