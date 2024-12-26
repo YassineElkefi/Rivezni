@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rivezni/core/services/firebase_auth_services.dart';
+import 'package:rivezni/core/services/firebase_auth_service.dart';
+import 'package:rivezni/shared/widgets/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthProvider with ChangeNotifier {
-  final FirebaseAuthService _authService = FirebaseAuthService();
+  final FirebaseAuthService _authService = FirebaseAuthService(firebaseAuth: FirebaseAuth.instance);
   User? _user;
   bool _isLoggedIn = false;
 
@@ -40,12 +41,23 @@ class AuthProvider with ChangeNotifier {
         notifyListeners();
       }
       return user;
+    } on FirebaseAuthException catch (e) {
+      String message = _getAuthErrorMessage(e.code);
+      showToast(message: message);
+      return null;
     } catch (e) {
-      throw Exception("Login failed: $e");
+      showToast(message: 'An unexpected error occurred');
+      return null;
     }
   }
 
   Future<User?> register(String email, String password, String username) async {
+    
+      if (email.isEmpty || password.isEmpty || username.isEmpty) {
+        showToast(message: 'Please fill in all fields');
+        return null;
+      }
+    
     try {
       final User? user = await _authService.signUpWithEmailAndPassword(
           email, password, username);
@@ -59,8 +71,13 @@ class AuthProvider with ChangeNotifier {
         notifyListeners();
       }
       return user;
+    } on FirebaseAuthException catch (e) {
+      String message = _getAuthErrorMessage(e.code);
+      showToast(message: message);
+      return null;
     } catch (e) {
-      throw Exception("Registration failed: $e");
+      showToast(message: 'An unexpected error occurred');
+      return null;
     }
   }
 
@@ -82,3 +99,26 @@ Future<bool> logout() async {
 }
 
 }
+
+  String _getAuthErrorMessage(String code) {
+    switch (code) {
+      case 'email-already-in-use':
+        return 'This email address is already registered';
+      case 'invalid-email':
+        return 'Invalid email address';
+      case 'operation-not-allowed':
+        return 'Email/password accounts are not enabled';
+      case 'weak-password':
+        return 'Please enter a stronger password';
+      case 'user-disabled':
+        return 'This account has been disabled';
+      case 'user-not-found':
+        return 'No account found with this email';
+      case 'wrong-password':
+        return 'Invalid Credentials';
+      case 'too-many-requests':
+        return 'Too many attempts. Please try again later';
+      default:
+        return 'An error occurred: $code';
+    }
+  }

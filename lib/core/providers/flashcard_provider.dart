@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:rivezni/core/services/flashcard_service.dart';
 import 'package:rivezni/data/models/flashcard.dart';
 import 'package:rivezni/data/models/subject.dart';
+import 'package:http/http.dart' as httpClient;
 
 class FlashcardProvider with ChangeNotifier {
-  final flashcardService = FlashcardService();
+  final flashcardService = FlashcardService(client: httpClient.Client());
   bool loading = true;
   List flashcards = [];
   Subject? subject;

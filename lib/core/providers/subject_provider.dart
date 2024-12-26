@@ -1,10 +1,12 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rivezni/core/services/subject_service.dart';
 import 'package:rivezni/data/models/subject.dart';
+import 'package:http/http.dart' as httpClient;
 
 class SubjectProvider with ChangeNotifier {
-  final subjectService = SubjectService();
+  final subjectService = SubjectService(client: httpClient.Client());
   bool loading = true;
   List subjects = [];
   User? user;

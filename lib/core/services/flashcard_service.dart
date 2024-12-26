@@ -5,13 +5,15 @@ import 'package:rivezni/data/models/flashcard.dart';
 
 class FlashcardService {
   static const String baseUrl = "http://10.0.2.2:3000/";
+  late httpClient.Client client;
 
-  FlashcardService();
+  FlashcardService({required this.client});
+  
 
   Future<List<Flashcard>> fetchFlashcards(int subjectId) async {
     String path = '${baseUrl}flashcards/$subjectId';
 
-    final response = await httpClient.get(Uri.parse(path));
+    final response = await client.get(Uri.parse(path));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load flashcards: ${response.body}');
@@ -24,22 +26,20 @@ class FlashcardService {
 
   Future<void> addFlashcard(Map<String, dynamic> flashcard) async {
     const String path = '${baseUrl}flashcard';
-      try{
-      await httpClient.post(
+      final response = await client.post(
         Uri.parse(path),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(flashcard),
       );
-
-    }catch (e){
-        throw Exception('Failed to add flashcard: $e');
-    }
+      if (response.statusCode != 200) {
+        throw Exception('Failed to add flashcard: ${response.body}');
+      }
   }
 
   Future<Response> deleteFlashcard(int id) async {
     String path = '${baseUrl}flashcard/$id';
     try{
-      final response = await httpClient.delete(
+      final response = await client.delete(
         Uri.parse(path),
         headers: {'Content-Type': 'application/json'},
         
